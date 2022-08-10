@@ -1,134 +1,33 @@
 <html>
 <head>
 <title>Project</title></head>
-<script type="text/javascript">
-	function multiplyBy()
-	{
-        var num1 = parseFloat(document.getElementById("num1").value);
-        var num2 = parseFloat(document.getElementById("num2").value);
-        var desc = document.getElementById("desc").value;
-        var result = num1*num2;
-        document.getElementById("result").innerHTML = result.toFixed(2);
-        var table = document.getElementById("tab");
-        var rowCount = table.rows.length;
-        var row = table.insertRow(rowCount);
-        row.insertCell(0).innerHTML = rowCount;
-        row.insertCell(1).innerHTML = desc;
-        row.insertCell(2).innerHTML = num1;
-        row.insertCell(3).innerHTML = num2.toFixed(2);
-        row.insertCell(4).innerHTML = result.toFixed(2);
-	}
-	function totalAmount(){
-		var table = document.getElementById("tab");
-        var rowCount = table.rows.length;
-        
-
-        //
-        var sum = 0.0;
-        for (var i = 1; i < rowCount; i++) {
-        	var cells = table.rows.item(i).cells;
-        	 var value = cells.item(4).innerHTML;
-        	 sum+=parseFloat(value);
-        	/*for (var i = 0; i < cells.length; i++) {
-        		if(i==4)
-        		{
-        			var value = cells.item(4).innerHTML;
-        			sum += parseFloat(value);
-        		}
-        	}*/
-       }
-       //
-       var row = table.insertRow(rowCount);
-        row.insertCell(0).innerHTML = 1;
-        row.insertCell(1).innerHTML = 1;
-        row.insertCell(2).innerHTML = 1;
-        row.insertCell(3).innerHTML = 1;
-        row.insertCell(4).innerHTML = sum;
-        totalGst(sum);
-        spellWord(sum);
-	}
-
-	function printDiv(){
-		totalAmount();
-		var content = document.getElementById("area").innerHTML;
-		var content_header = document.getElementById("area1").innerHTML;
-		var a = window.open('','','height=500, width=500');
-		a.document.write('<html>');
-		a.document.write('<body>');
-		a.document.write(content_header);
-		a.document.write(content);
-		a.document.write('</body</html');
-		a.document.close();
-		a.print();
-	}
-
-	function totalGst(sum){
-		var num1 = parseFloat(document.getElementById("sgst").value);
-        
-        var result = (num1*sum)/100;
-        document.getElementById("result").innerHTML = result.toFixed(2);
-        var table = document.getElementById("tab");
-        var rowCount = table.rows.length;
-        var row = table.insertRow(rowCount);
-        row.insertCell(0).innerHTML = 2;
-        row.insertCell(1).innerHTML = 2;
-        row.insertCell(2).innerHTML = 2;
-        row.insertCell(3).innerHTML = "SGST";
-        row.insertCell(4).innerHTML = result.toFixed(2);
-	}
-
-	function deleteRow(){
-		var table = document.getElementById("tab");
-        var rowCount = table.rows.length;
-        if(rowCount>1)
-			document.getElementById("tab").deleteRow(rowCount-1);
-	}
-
-	var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
-var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
-
-function inWords (num) {
-    if ((num = num.toString()).length > 9) return 'overflow';
-    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-    if (!n) return; var str = '';
-    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
-    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
-    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
-    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
-    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
-    return str;
+<script type="text/javascript" src="spell.js"></script>
+<script type="text/javascript" src="need.js"></script>
+<style type="text/css">
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
-
-function spellWord(sum){
-	var num1 = inWords(parseFloat(sum));
-        
-        //var result = (num1*sum)/100;
-        //document.getElementById("result").innerHTML = result.toFixed(2);
-        var table = document.getElementById("tab");
-        var rowCount = table.rows.length;
-        var row = table.insertRow(rowCount);
-        row.insertCell(0).innerHTML = 3;
-        row.insertCell(1).innerHTML = 3;
-        row.insertCell(2).innerHTML = 3;
-        row.insertCell(3).innerHTML = 3;
-        row.insertCell(4).innerHTML = "Rupees " + num1;
-}
-</script>
+</style>
 
 <body>
 	<table>
 	<tr>
+		<td><p>Description</p></td>
+		<td><p>Qty</p></td>
+		<td><p>Price</p></td>		
+	</tr>
+	<tr>
 	<td><input type="text" id="desc" /></td>
 	<td><input type="text" id="num1" /></td>
 	<td><input type="text" id="num2"/></td>
-	<td><input type="submit" onclick="multiplyBy()" value="Add"/> </td>
-	<td><input type="submit" onclick="totalGst()" value="Cal" /></td>
-	<td><input type="submit" onclick="deleteRow()" value="ROW Delete"></td>
 	</tr>
 	<tr>
-		<td>
-			SGST
-		</td>
+		<td><p>SGST</p></td>
+		<td><p>CGST</p></td>
+		<td><p>IGST</p></td>		
+	</tr>
+	<tr>
 		<td>
 			<select id="sgst">
 				<option value="2.5"> 2.5% </option>
@@ -136,14 +35,22 @@ function spellWord(sum){
 			</select>
 		</td>
 		<td>
-			CGST
-		</td>
-		<td>
 			<select id="cgst">
 				<option value="2.5"> 2.5% </option>
 				<option value="9"> 9% </option>
 			</select>
 		</td>
+		<td>
+			<select id="igst">
+				<option value="2.5"> 2.5% </option>
+				<option value="9"> 9% </option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><input type="submit" onclick="multiplyBy()" value="Add"/> </td>
+		<td><input type="submit" onclick="totalAmount()" value="Calculate" /></td>
+		<td><input type="submit" onclick="deleteRow()" value="ROW Delete"></td>
 	</tr>
 	</table>
 	<span id="result"></span>
@@ -153,13 +60,13 @@ function spellWord(sum){
 
 	</div>
 	<div id="area">
-		<table style="border: 1px solid black" align="center" id="tab">
-			<tr style="border: 1px solid black">
-				<td>sl</td>
-				<td>Desc</td>
-				<td>qty</td>
-				<td>price</td>
-				<td>amount</td>
+		<table align="center" id="tab" style="width: 80%">
+			<tr>
+				<td>Sl.</td>
+				<td>Description</td>
+				<td>Qty</td>
+				<td>Price</td>
+				<td>Amount</td>
 			</tr>
 		</table>
 	</div>
