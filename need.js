@@ -85,10 +85,11 @@ function multiplyBy()
         var content_header = document.getElementById("area1").innerHTML;
         var a = window.open('','','height=500, width=500');
         a.document.write('<html>');
+        a.document.write('<link rel="stylesheet" href="print.css" type="text/css" media="print" />')
         a.document.write('<body>');
         a.document.write(content_header);
         a.document.write(content);
-        a.document.write('</body</html');
+        a.document.write('<footer>Other terms and conditions are remain same.</footer></body></html');
         a.document.close();
         a.print();
     }
@@ -99,3 +100,13 @@ function multiplyBy()
         if(rowCount>1)
             document.getElementById("tab").deleteRow(rowCount-1);
     }
+    function printDiv1(divName) {
+         var printContents = document.getElementById(divName).innerHTML;
+         var originalContents = document.body.innerHTML;
+
+         document.body.innerHTML = printContents;
+
+         window.print();
+
+         document.body.innerHTML = originalContents;
+}
